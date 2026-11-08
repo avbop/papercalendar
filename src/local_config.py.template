@@ -1,0 +1,10 @@
+from datetime import date
+from classes import event, week_event
+from colors import Color
+from icons import Icon
+
+
+def customize_events(events: list[tuple[date, event | week_event]], years: list[int]):
+    for y in years:
+        birthday = event("Happy birthday!", Color.BIRTHDAY, Icon.BIRTHDAY)
+        events.append((date(y, 9, 22), birthday))
