@@ -9,5 +9,11 @@ dependencies = [
     "pytest>=9.2.0",
 ]
 
+[project.scripts]
+calendar = "generate:main"
+
+[tool.uv]
+package = true
+
 [tool.pytest]
 addopts = ["--doctest-modules"]

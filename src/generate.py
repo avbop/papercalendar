@@ -133,7 +133,7 @@ def color_image(img, color):
     return img
 
 
-if __name__ == "__main__":
+def main():
     cal = calendar()
     data.add_events(cal, [2027])
     if PREVIEW:
@@ -145,3 +145,7 @@ if __name__ == "__main__":
         pool.apply_async(generate_week, (cal.get_week(w), cal))
     pool.close()
     pool.join()
+
+
+if __name__ == "__main__":
+    main()
