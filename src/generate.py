@@ -1,6 +1,6 @@
 import data
 from constants import *
-from classes import calendar
+from classes import calendar, week_key
 from datetime import timedelta, date
 from PIL import Image, ImageDraw, ImageOps, ImageColor, ImageText
 import os
@@ -40,7 +40,7 @@ def generate_week(wk, cal, debug, preview):
         if i not in [0, 4]:
             draw.line([x, y, x, y + DY], fill=BORDER_COLOUR, width=BORDER_WIDTH)
         if debug:
-            draw.line([x, y - BORDER_OFFSET, x, HEIGHT // 2], fill="red", width=1)
+            draw.line([x, y - BORDER_OFFSET, x, HEIGHT // 2], fill=Color.DEBUG, width=1)
         x += DX
     # lower left corner
     x = X_ORIGIN_BOTTOM
@@ -49,7 +49,9 @@ def generate_week(wk, cal, debug, preview):
         if i not in [0, 4]:
             draw.line([x, y, x, y + DY], fill=BORDER_COLOUR, width=BORDER_WIDTH)
         if debug:
-            draw.line([x, y - BORDER_OFFSET, x, HEIGHT - MARGIN], fill="red", width=1)
+            draw.line(
+                [x, y - BORDER_OFFSET, x, HEIGHT - MARGIN], fill=Color.DEBUG, width=1
+            )
         x -= DX
 
     # Draw each day.
@@ -85,8 +87,8 @@ def generate_week(wk, cal, debug, preview):
     # Output.
     if debug:
         # Debug info.
-        draw.line([WIDTH // 2, 0, WIDTH // 2, HEIGHT], fill="red")
-        draw.line([0, HEIGHT // 2, WIDTH, HEIGHT // 2], fill="red")
+        draw.line([WIDTH // 2, 0, WIDTH // 2, HEIGHT], fill=Color.RED)
+        draw.line([0, HEIGHT // 2, WIDTH, HEIGHT // 2], fill=Color.RED)
         # Preview.
     if preview:
         out.show()
@@ -108,6 +110,7 @@ def draw_day(d, x_base, y_base, img):
         y, right = draw_text_with_icon(e.title, e.icon, e.color, x, y, img)
 
 
+# TODO: automatically wrap text
 def draw_text_with_icon(text, icon, color, x, y, img):
     draw = ImageDraw.Draw(img)
     icon = Image.open(ICON_DIR + icon)
@@ -148,6 +151,7 @@ def parse_args() -> argparse.Namespace:
         args.start = date.today()
     if args.end is None:
         args.end = args.start
+    args.start = week_key(args.start)
     return args
 
 
@@ -161,7 +165,7 @@ def main():
         exit(0)
     setup_output(cal)
     pool = multiprocessing.Pool(os.cpu_count())
-    d = cal.get_week(args.start).id  # Convert to the first day of the week.
+    d = args.start
     while d <= args.end:
         pool.apply_async(
             generate_week, (cal.get_week(d), cal, args.debug, args.preview)

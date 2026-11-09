@@ -10,7 +10,7 @@ lazy import data2027
 
 def add_events(c: calendar, years: list[int]):
     events: list[tuple[date, event | week_event]] = []
-    pending: list[tuple[int, int, int, Week | Event]] = []
+    pending: list[tuple[int, int, int, Week | Event | event | week_event]] = []
     for y in years:
         if y == 2026:
             pending = data2026.events
@@ -18,7 +18,10 @@ def add_events(c: calendar, years: list[int]):
             pending = data2027.events
         for e in pending:
             d = date(e[0], e[1], e[2])
-            events.append((d, e[3].value))
+            if isinstance(e[3], (Week, Event)):
+                events.append((d, e[3].value))
+            else:
+                events.append((d, e[3]))
     try:
         from local_config import customize_events
 

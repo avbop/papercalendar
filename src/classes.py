@@ -18,7 +18,7 @@ class week:
         id: date,
         e: week_event,
     ):
-        self.id: date = _make_sun(id)
+        self.id: date = week_key(id)
         self.title: str = e.title
         self.color: Color = e.color
 
@@ -60,21 +60,21 @@ class calendar:
                 self._days[d] = day(d)
             self._days[d].events.append(e)
         else:
-            d = _make_sun(d)
+            d = week_key(d)
             self._weeks[d] = week(d, e)
 
     def get_week(self, id: date) -> week:
-        id = _make_sun(id)
+        id = week_key(id)
         return self._weeks.get(id, week(id, week_event("", Color.DEFAULT)))
 
     def get_day(self, id: date) -> day:
         return self._days.get(id, day(id))
 
 
-def _make_sun(d: date) -> date:
+def week_key(d: date) -> date:
     """Return the nearest Sunday that is <= d.
 
-    >>> _make_sun(date(2026, 11, 12))
+    >>> week_key(date(2026, 11, 12))
     datetime.date(2026, 11, 8)
     """
     while d.weekday() != Weekday.SUNDAY:

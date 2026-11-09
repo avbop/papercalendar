@@ -14,3 +14,4 @@ class Color(StrEnum):
     DEATH = BLACK
     GENERIC = BLACK
     DEFAULT = BLACK
+    DEBUG = "red"
