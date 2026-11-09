@@ -6,5 +6,56 @@ from icons import Icon
 
 def customize_events(events: list[tuple[date, event | week_event]], years: list[int]):
     for y in years:
-        birthday = event("Happy birthday!", Color.BIRTHDAY, Icon.BIRTHDAY)
-        events.append((date(y, 9, 22), birthday))
+        birthday = anniversary("Happy {} birthday!", Color.BIRTHDAY, Icon.BIRTHDAY, 1892, y)
+		if birthday is not None:
+			events.append((date(y, 1, 3), birthday))
+
+
+def anniversary(
+    title: str, color: Color, icon: Icon, first_year: int, current_year: int
+) -> event | None:
+    dy = current_year - first_year
+    if dy < 1:
+        return None
+    txt = ordinal_text(dy)
+    return event(title.format(txt), color, icon)
+
+
+def ordinal_text(i: int) -> str:
+    """Return the English ordinal numeral and abbreviation.
+    >>> ordinal_text(1)
+    '1st'
+    >>> ordinal_text(2)
+    '2nd'
+    >>> ordinal_text(3)
+    '3rd'
+    >>> ordinal_text(4)
+    '4th'
+    >>> ordinal_text(5)
+    '5th'
+    >>> ordinal_text(31)
+    '31st'
+    >>> ordinal_text(32)
+    '32nd'
+    >>> ordinal_text(33)
+    '33rd'
+    >>> ordinal_text(34)
+    '34th'
+    >>> ordinal_text(1023)
+    '1023rd'
+    >>> ordinal_text(1013)
+    '1013th'
+    """
+    txt = f"{i}th"
+    digits = i % 100
+    if digits > 10 and digits < 20:
+        txt = f"{i}th"
+    else:
+        digits = i % 10
+        if digits == 1:
+            txt = f"{i}st"
+        elif digits == 2:
+            txt = f"{i}nd"
+        elif digits == 3:
+            txt = f"{i}rd"
+    return txt

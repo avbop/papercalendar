@@ -10,6 +10,7 @@ lazy import data2027
 
 def add_events(c: calendar, years: list[int]):
     events: list[tuple[date, event | week_event]] = []
+    pending: list[tuple[int, int, int, Week | Event]] = []
     for y in years:
         if y == 2026:
             pending = data2026.events
