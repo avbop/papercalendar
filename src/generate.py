@@ -6,10 +6,8 @@ from PIL import Image, ImageDraw, ImageOps, ImageColor, ImageText
 import os
 import multiprocessing
 from colors import Color
-
-TESTING = True
-PREVIEW = True
-PREVIEW_DATE = date(2027, 1, 9)
+import argparse
+import typing
 
 
 def _clean_rm(path):
@@ -30,7 +28,7 @@ def setup_output(cal):
         os.makedirs(OUT_DIR)
 
 
-def generate_week(wk, cal):
+def generate_week(wk, cal, debug, preview):
     out = Image.new("RGB", (WIDTH, HEIGHT), "white")
     draw = ImageDraw.Draw(out)
 
@@ -41,7 +39,7 @@ def generate_week(wk, cal):
     for i in range(5):
         if i not in [0, 4]:
             draw.line([x, y, x, y + DY], fill=BORDER_COLOUR, width=BORDER_WIDTH)
-        if TESTING:
+        if debug:
             draw.line([x, y - BORDER_OFFSET, x, HEIGHT // 2], fill="red", width=1)
         x += DX
     # lower left corner
@@ -50,7 +48,7 @@ def generate_week(wk, cal):
     for i in range(5):
         if i not in [0, 4]:
             draw.line([x, y, x, y + DY], fill=BORDER_COLOUR, width=BORDER_WIDTH)
-        if TESTING:
+        if debug:
             draw.line([x, y - BORDER_OFFSET, x, HEIGHT - MARGIN], fill="red", width=1)
         x -= DX
 
@@ -85,12 +83,12 @@ def generate_week(wk, cal):
             draw_day(day, x, y, out)
 
     # Output.
-    if TESTING:
+    if debug:
         # Debug info.
         draw.line([WIDTH // 2, 0, WIDTH // 2, HEIGHT], fill="red")
         draw.line([0, HEIGHT // 2, WIDTH, HEIGHT // 2], fill="red")
         # Preview.
-    if PREVIEW:
+    if preview:
         out.show()
     out.save(OUT_FMT.format(wk.filename()))
 
@@ -133,16 +131,42 @@ def color_image(img, color):
     return img
 
 
+def parse_args() -> argparse.Namespace:
+    p = argparse.ArgumentParser(
+        description="Generate a printable calendar, one page per week."
+    )
+    p.add_argument("--start", type=date.fromisoformat, help="The starting date.")
+    p.add_argument("--end", type=date.fromisoformat, help="The ending date.")
+    p.add_argument(
+        "-d", "--debug", help="Print debug information.", action="store_true"
+    )
+    p.add_argument(
+        "-p", "--preview", help="Preview first generated image.", action="store_true"
+    )
+    args = p.parse_args()
+    if args.start is None:
+        args.start = date.today()
+    if args.end is None:
+        args.end = args.start
+    return args
+
+
 def main():
+    args = parse_args()
     cal = calendar()
-    data.add_events(cal, [2027])
-    if PREVIEW:
-        generate_week(cal.get_week(PREVIEW_DATE), cal)
+    for i in range(args.start.year, args.end.year + 1):
+        data.add_events(cal, [i])
+    if args.preview:
+        generate_week(cal.get_week(args.start), cal, args.debug, args.preview)
         exit(0)
     setup_output(cal)
     pool = multiprocessing.Pool(os.cpu_count())
-    for w in cal.week_keys():
-        pool.apply_async(generate_week, (cal.get_week(w), cal))
+    d = cal.get_week(args.start).id  # Convert to the first day of the week.
+    while d <= args.end:
+        pool.apply_async(
+            generate_week, (cal.get_week(d), cal, args.debug, args.preview)
+        )
+        d += timedelta(days=7)
     pool.close()
     pool.join()
 
