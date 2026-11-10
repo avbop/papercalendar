@@ -4,12 +4,9 @@ from datetime import timedelta, date
 from colors import Color
 from icons import Icon
 from util import *
-
-
-class week_event:
-    def __init__(self, title: str, color: Color):
-        self.title = title
-        self.color = color
+from events import event
+from weeks import week_event
+import data
 
 
 class week:
@@ -28,16 +25,6 @@ class week:
     def __str__(self):
         d = self.id.strftime("%Y-%m-%d")
         return f"Week of {d} ({self.title})"
-
-
-class event:
-    def __init__(self, title: str, color: Color, icon: Icon):
-        self.title: str = title
-        self.color: Color = color
-        self.icon: Icon = icon
-
-    def __str__(self) -> str:
-        return self.title
 
 
 class day:
@@ -65,9 +52,13 @@ class calendar:
 
     def get_week(self, id: date) -> week:
         id = week_key(id)
+        if id not in self._weeks:
+            data.add_events(self, id.year)
         return self._weeks.get(id, week(id, week_event("", Color.DEFAULT)))
 
     def get_day(self, id: date) -> day:
+        if id not in self._days:
+            data.add_events(self, id.year)
         return self._days.get(id, day(id))
 
 

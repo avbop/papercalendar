@@ -1,8 +1,18 @@
-from classes import event
-from colors import Color
-from icons import Icon
 from enum import Enum
 import re
+from colors import Color
+from icons import Icon
+from weeks import week_event, Week
+
+
+class event:
+    def __init__(self, title: str, color: Color, icon: Icon):
+        self.title: str = title
+        self.color: Color = color
+        self.icon: Icon = icon
+
+    def __str__(self) -> str:
+        return self.title
 
 
 class Event(Enum):

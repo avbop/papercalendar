@@ -1,6 +1,11 @@
-from classes import week_event
 from colors import Color
 from enum import Enum
+
+
+class week_event:
+    def __init__(self, title: str, color: Color):
+        self.title = title
+        self.color = color
 
 
 class Week(Enum):

@@ -4,11 +4,10 @@ from colors import Color
 from icons import Icon
 
 
-def customize_events(events: list[tuple[date, event | week_event]], years: list[int]):
-    for y in years:
-        birthday = anniversary("Happy {} birthday!", Color.BIRTHDAY, Icon.BIRTHDAY, 1892, y)
-		if birthday is not None:
-			events.append((date(y, 1, 3), birthday))
+def customize_events(events: list[tuple[date, event | week_event]], year: int):
+	birthday = anniversary("Happy {} birthday!", Color.BIRTHDAY, Icon.BIRTHDAY, 1892, y)
+	if birthday is not None:
+		events.append((date(y, 1, 3), birthday))
 
 
 def anniversary(

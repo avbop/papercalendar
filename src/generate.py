@@ -1,6 +1,6 @@
 import data
 from constants import *
-from classes import calendar, week_key
+from cal import calendar, week_key
 from datetime import timedelta, date
 from PIL import Image, ImageDraw, ImageOps, ImageColor, ImageText
 import os
@@ -158,8 +158,6 @@ def parse_args() -> argparse.Namespace:
 def main():
     args = parse_args()
     cal = calendar()
-    for i in range(args.start.year, args.end.year + 1):
-        data.add_events(cal, [i])
     if args.preview:
         generate_week(cal.get_week(args.start), cal, args.debug, args.preview)
         exit(0)

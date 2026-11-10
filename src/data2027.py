@@ -1,6 +1,5 @@
-from weeks import Week
-from events import Event, comm, mem
-from classes import week_event, event
+from weeks import week_event, Week
+from events import event, Event, mem, comm
 
 YEAR = 2027
 
