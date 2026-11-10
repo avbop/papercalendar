@@ -6,6 +6,7 @@ from classes import event, week_event
 import sys
 lazy import data2026
 lazy import data2027
+lazy import data2028
 
 
 def add_events(c: calendar, years: list[int]):
@@ -16,6 +17,8 @@ def add_events(c: calendar, years: list[int]):
             pending = data2026.events
         elif y == 2027:
             pending = data2027.events
+        elif y == 2028:
+            pending = data2028.events
         for e in pending:
             d = date(e[0], e[1], e[2])
             if isinstance(e[3], (Week, Event)):
