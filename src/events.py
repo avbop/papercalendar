@@ -377,9 +377,9 @@ class Event(Enum):
     OP_HOLY_NAME = event("Most Holy Name of Jesus (II)", Color.WHITE, Icon.OP)
 
 
-def mem(base: Event, mems: list[Event]) -> event:
+def mem(base: Event, *mems: Event) -> event:
     """Combine events on the OP calendar such that other feasts are listed as memorials.
-    >>> mem(Event.OP_C_OCT_SUN, [Event.OP_JOHN_EVANGELIST]).title
+    >>> mem(Event.OP_C_OCT_SUN, Event.OP_JOHN_EVANGELIST).title
     'Sunday in the Octave (II)\\nmem. St. John'
     """
     ending = re.compile(r"\s+\(I+V?\)$")
