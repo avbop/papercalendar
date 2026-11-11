@@ -551,6 +551,6 @@ events: list[tuple[int, int, int, Week | Event | week_event | event]] = [
     (YEAR, 12, 30, Event.CO),
     (YEAR, 12, 31, Event.CO),
     (YEAR, 12, 31, Event.SYLVESTER),
-    (YEAR, 1, 1, Event.OP_C_OCT_SUN),
+    (YEAR, 1, 1, Event.OP_CO_SUN),
     (YEAR, 1, 2, Event.OP_BVM),
 ]
