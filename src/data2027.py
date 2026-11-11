@@ -65,7 +65,7 @@ events: list[tuple[int, int, int, week_event | event]] = [
     (YEAR, 1, 5, lit_no.CF),
     (YEAR, 1, 6, lit_no.EPIPHANY),
     (YEAR, 1, 7, lit_no.CF),
-    (YEAR, 1, 7, lit_no.RAYMOND_PEÑAFORT),
+    (YEAR, 1, 7, lit_no.RAYMOND_PENAFORT),
     (YEAR, 1, 8, lit_no.CF),
     (YEAR, 1, 9, lit_no.CF),
     (YEAR, 1, 10, lit_no.BAPTISM),
