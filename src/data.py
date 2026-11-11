@@ -1,7 +1,7 @@
 from datetime import date
 import cal
-from events import event, Event
-from weeks import week_event, Week
+from events import event
+from weeks import week_event
 import sys
 lazy import data2026
 lazy import data2027
@@ -15,7 +15,7 @@ def add_events(c: cal.calendar, year: int):
             int,
             int,
             int,
-            Week | Event | event | week_event,
+            event | week_event,
         ]
     ] = []
     if year == 2026:
@@ -26,10 +26,7 @@ def add_events(c: cal.calendar, year: int):
         pending = data2028.events
     for e in pending:
         d = date(e[0], e[1], e[2])
-        if isinstance(e[3], (Week, Event)):
-            es.append((d, e[3].value))
-        else:
-            es.append((d, e[3]))
+        es.append((d, e[3]))
     try:
         from local_config import customize_events
 

@@ -2,7 +2,6 @@ from enum import Enum
 import re
 from colors import Color
 from icons import Icon
-from weeks import week_event, Week
 
 
 class event:
@@ -15,603 +14,80 @@ class event:
         return self.title
 
 
-class Event(Enum):
-    HOLY_NAME = event("Most Holy Name of Jesus (om)", Color.WHITE, Icon.NO)
-    EPIPHANY = event("Epiphany of the Lord (s)", Color.WHITE, Icon.NO)
-    BAPTISM = event("Baptism of the Lord (f)", Color.WHITE, Icon.NO)
-    PRESENTATION = event("Presentation of the Lord (f)", Color.WHITE, Icon.NO)
-    ANNUNCIATION = event("Annunciation of the Lord (s)", Color.WHITE, Icon.NO)
-    TRINITY = event("Most Holy Trinity (s)", Color.WHITE, Icon.NO)
-    CORPUS_CHRISTI = event(
-        "Most Holy Body and Blood of Christ (s)", Color.WHITE, Icon.NO
-    )
-    SACRED_HEART = event("Most Sacred Heart of Jesus (s)", Color.WHITE, Icon.NO)
-    IMMACULATE_HEART = event("Immaculate Heart of Mary (m)", Color.WHITE, Icon.NO)
-    TRANSFIGURATION = event("Transfiguration of the Lord (f)", Color.WHITE, Icon.NO)
-    HOLY_CROSS = event("Exaltation of the Holy Cross (f)", Color.RED, Icon.NO)
-    CHRIST_KING = event(
-        "Our Lord Jesus Christ, King of the Universe (s)", Color.WHITE, Icon.NO
-    )
-
-    ASH_WEDNESDAY = event("Ash Wednesday", Color.PURPLE, Icon.NO)
-    L1 = event("First Sunday of Lent", Color.PURPLE, Icon.NO)
-    L2 = event("Second Sunday of Lent", Color.PURPLE, Icon.NO)
-    L3 = event("Third Sunday of Lent", Color.PURPLE, Icon.NO)
-    L4 = event("Fourth Sunday of Lent", Color.PINK, Icon.NO)
-    L5 = event("Fifth Sunday of Lent", Color.PURPLE, Icon.NO)
-    PALM_SUNDAY = event("Palm Sunday", Color.RED, Icon.NO)
-    L6 = PALM_SUNDAY
-    HOLY_WEEK_MON = event("Monday of Holy Week", Color.PURPLE, Icon.NO)
-    HOLY_WEEK_TUE = event("Tuesday of Holy Week", Color.PURPLE, Icon.NO)
-    HOLY_WEEK_WED = event("Wednesday of Holy Week", Color.PURPLE, Icon.NO)
-    HOLY_THURSDAY = event("Holy Thursday", Color.WHITE, Icon.NO)
-    GOOD_FRIDAY = event("Good Friday", Color.RED, Icon.NO)
-    HOLY_SATURDAY = event("Holy Saturday", Color.WHITE, Icon.NO)
-    E1 = event("Easter Sunday", Color.WHITE, Icon.NO)
-    EASTER = E1
-    EO = event("Easter Octave (s)", Color.WHITE, Icon.NO)
-    E2 = event("Second Sunday of Easter", Color.WHITE, Icon.NO)
-    E3 = event("Third Sunday of Easter", Color.WHITE, Icon.NO)
-    E4 = event("Fourth Sunday of Easter", Color.WHITE, Icon.NO)
-    E5 = event("Fifth Sunday of Easter", Color.WHITE, Icon.NO)
-    E6 = event("Sixth Sunday of Easter", Color.WHITE, Icon.NO)
-    ASCENSION = event("Ascension of the Lord (s)", Color.WHITE, Icon.NO)
-    E7 = event("Seventh Sunday of Easter", Color.WHITE, Icon.NO)
-    PENTECOST = event("Pentecost (s)", Color.RED, Icon.NO)
-
-    A1 = event("First Sunday of Advent", Color.PURPLE, Icon.NO)
-    A2 = event("Second Sunday of Advent", Color.PURPLE, Icon.NO)
-    A3 = event("Third Sunday of Advent", Color.PINK, Icon.NO)
-    A4 = event("Fourth Sunday of Advent", Color.PURPLE, Icon.NO)
-    AW = event("Advent Weekday", Color.PURPLE, Icon.NO)
-    CHRISTMAS = event("Nativity of the Lord (s)", Color.WHITE, Icon.NO)
-    HOLY_FAMILY = event("Holy Family (f)", Color.WHITE, Icon.NO)
-    C_SUN_2 = event("Second Sunday of Christmas", Color.WHITE, Icon.NO)
-    CO = event("Christmas Octave (f)", Color.WHITE, Icon.NO)
-
-    AF = event("Feria", Color.PURPLE, Icon.NO)
-    CF = event("Feria", Color.WHITE, Icon.NO)
-    LF = event("Feria", Color.PURPLE, Icon.NO)
-    EF = event("Feria", Color.WHITE, Icon.NO)
-    OTF = event("Feria", Color.GREEN, Icon.NO)
-
-    MOTHER_OF_GOD = event("Mary, the Mother of God (s)", Color.WHITE, Icon.NO)
-    MOTHER_CHURCH = event("Mary, Mother of the Church (m)", Color.WHITE, Icon.NO)
-    VISITATION = event("Visitation of Our Lady (f)", Color.WHITE, Icon.NO)
-    ASSUMPTION = event("Assumption of Our Lady (s)", Color.WHITE, Icon.NO)
-    QUEENSHIP = event("Queenship of Our Lady (m)", Color.WHITE, Icon.NO)
-    NATIVITY_BVM = event("Nativity of Our Lady (f)", Color.WHITE, Icon.NO)
-    OL_SORROWS = event("Our Lady of Sorrows (m)", Color.WHITE, Icon.NO)
-    PRESENTATION_BVM = event("Presentation of Our Lady (m)", Color.WHITE, Icon.NO)
-    IMMACULATE_CONCEPTION = event("Immaculate Conception (s)", Color.WHITE, Icon.NO)
-    HOLY_NAME_BVM = event("Most Holy Name of Mary (om)", Color.WHITE, Icon.NO)
-    OL_LOURDES = event("Our Lady of Lourdes (om)", Color.WHITE, Icon.NO)
-    OL_FATIMA = event("Our Lady of Fatima (om)", Color.WHITE, Icon.NO)
-    OL_CARMEL = event("Our Lady of Mt. Carmel (om)", Color.WHITE, Icon.NO)
-    OL_ROSARY = event("Our Lady of the Rosary (m)", Color.WHITE, Icon.NO)
-    OL_LORETO = event("Our Lady of Loreto (om)", Color.WHITE, Icon.NO)
-    OL_GUADALUPE = event("Our Lady of Guadalupe (om)", Color.WHITE, Icon.NO)
-    BVM = event("Our Lady on Saturday (om)", Color.WHITE, Icon.NO)
-
-    OT1 = event("First Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT2 = event("Second Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT3 = event("Third Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT4 = event("Fourth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT5 = event("Fifth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT6 = event("Sixth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT7 = event("Seventh Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT8 = event("Eighth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT9 = event("Ninth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT10 = event("Tenth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT11 = event("Eleventh Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT12 = event("Twelfth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT13 = event("Thirteenth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT14 = event("Fourteenth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT15 = event("Fifteenth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT16 = event("Sixteenth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT17 = event("Seventeenth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT18 = event("Eighteenth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT19 = event("Nineteenth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT20 = event("Twentieth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT21 = event("Twenty-First Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT22 = event("Twenty-Second Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT23 = event("Twenty-Third Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT24 = event("Twenty-Fourth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT25 = event("Twenty-Fifth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT26 = event("Twenty-Sixth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT27 = event("Twenty-Seventh Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT28 = event("Twenty-Eighth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT29 = event("Twenty-Ninth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT30 = event("Thirtieth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT31 = event("Thirty-First Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT32 = event("Thirty-Second Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT33 = event("Thirty-Third Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-    OT34 = event("Thirty-Fourth Sunday in Ordinary Time", Color.GREEN, Icon.NO)
-
-    BASIL_GREGORY = event(
-        "Ss. Basil the Great and Gregory Nazianzen (m)", Color.WHITE, Icon.NO
-    )
-    ELIZABETH_ANN_SETON = event("St. Elizabeth Ann Seton (m)", Color.WHITE, Icon.NO)
-    JOHN_NEUMANN = event("St. John Neumann (m)", Color.WHITE, Icon.NO)
-    ANDRÉ_BESSETTE = event("St. André Bessette (om)", Color.WHITE, Icon.NO)
-    RAYMOND_PEÑAFORT = event("St. Raymond of Peñafort (om)", Color.WHITE, Icon.NO)
-    HILARY = event("St. Hilary (om)", Color.WHITE, Icon.NO)
-    ANTHONY = event("St. Anthony (m)", Color.WHITE, Icon.NO)
-    FABIAN = event("St. Fabian (om)", Color.RED, Icon.NO)
-    SEBASTIAN = event("St. Sebastian (om)", Color.RED, Icon.NO)
-    AGNES = event("St. Agnes (m)", Color.RED, Icon.NO)
-    VINCENT = event("St. Vincent (om)", Color.RED, Icon.NO)
-    FRANCIS_SALES = event("St. Francis de Sales (m)", Color.WHITE, Icon.NO)
-    PAUL_CONVERSION = event("Conversion of St. Paul (f)", Color.WHITE, Icon.NO)
-    TIMOTHY_TITUS = event("Ss. Timothy and Titus (m)", Color.WHITE, Icon.NO)
-    ANGELA_MERICI = event("St. Angela Merici (om)", Color.WHITE, Icon.NO)
-    THOMAS_AQUINAS = event("St. Thomas Aquinas (m)", Color.WHITE, Icon.NO)
-    JOHN_BOSCO = event("St. John Bosco (m)", Color.WHITE, Icon.NO)
-    ANSGAR = event("St. Ansgar (om)", Color.WHITE, Icon.NO)
-    BLAISE = event("St. Blaise (om)", Color.RED, Icon.NO)
-    AGATHA = event("St. Agatha (m)", Color.RED, Icon.NO)
-    PAUL_MIKI = event("Ss. Paul Miki and companions (m)", Color.RED, Icon.NO)
-    JEROME_EMILIANI = event("St. Jerome Emiliani (om)", Color.WHITE, Icon.NO)
-    JOSEPHINE_BAKHITA = event("St. Josephine Bakhita (om)", Color.WHITE, Icon.NO)
-    SCHOLASTICA = event("St. Scholastica (m)", Color.WHITE, Icon.NO)
-    CYRIL_METHODIUS = event("Ss. Cyril and Methodius (m)", Color.WHITE, Icon.NO)
-    SEVEN_FOUNDERS = event("Seven Holy Servite Founders (om)", Color.WHITE, Icon.NO)
-    PETER_DAMIAN = event("St. Peter Damian (om)", Color.WHITE, Icon.NO)
-    CHAIR_PETER = event("Chair of St. Peter (f)", Color.WHITE, Icon.NO)
-    POLYCARP = event("St. Polycarp (m)", Color.RED, Icon.NO)
-    GREGORY_NAREK = event("St. Gregory of Narek (om)", Color.WHITE, Icon.NO)
-    KATHARINE_DREXEL = event("St. Katharine Drexel (om)", Color.WHITE, Icon.NO)
-    CASIMIR = event("St. Casimir (om)", Color.WHITE, Icon.NO)
-    PERPETUA_FELICITY = event("Ss. Perpetua and Felicity (m)", Color.RED, Icon.NO)
-    JOHN_OF_GOD = event("St. John of God (om)", Color.WHITE, Icon.NO)
-    FRANCES_ROME = event("St. Frances of Rome (om)", Color.WHITE, Icon.NO)
-    PATRICK = event("St. Patrick (om)", Color.WHITE, Icon.NO)
-    CYRIL_JERUSALEM = event("St. Cyril of Jerusalem (om)", Color.WHITE, Icon.NO)
-    JOSEPH = event("St. Joseph (s)", Color.WHITE, Icon.NO)
-    TURIBIUS = event("St. Turibius of Mogrovejo (om)", Color.WHITE, Icon.NO)
-    FRANCIS_PAOLA = event("St. Francis of Paola (om)", Color.WHITE, Icon.NO)
-    ISIDORE = event("St. Isidore (om)", Color.WHITE, Icon.NO)
-    VINCENT_FERRER = event("St. Vincent Ferrer (om)", Color.WHITE, Icon.NO)
-    JOHN_BAPTIST_DE_LA_SALLE = event(
-        "St. John Baptist de la Salle (m)", Color.WHITE, Icon.NO
-    )
-    STANISLAUS = event("St. Stanislaus (m)", Color.RED, Icon.NO)
-    MARTINI = event("St. Martin I (om)", Color.RED, Icon.NO)
-    ANSELM = event("St. Anselm (om)", Color.WHITE, Icon.NO)
-    GEORGE = event("St. George (om)", Color.RED, Icon.NO)
-    ADALBERT = event("St. Adalbert (om)", Color.RED, Icon.NO)
-    FIDELIS = event("St. Fidelis of Sigmaringen (om)", Color.RED, Icon.NO)
-    MARK = event("St. Mark (f)", Color.RED, Icon.NO)
-    PETER_CHANEL = event("St. Peter Chanel (om)", Color.WHITE, Icon.NO)
-    LOUIS_MONTFORT = event("St. Louis de Montfort (om)", Color.WHITE, Icon.NO)
-    CATHERINE_SIENA = event("St. Catherine of Siena (m)", Color.WHITE, Icon.NO)
-    PIUSV = event("St. Pius V (om)", Color.WHITE, Icon.NO)
-    JOSEPH_WORKER = event("St. Joseph the Worker (om)", Color.WHITE, Icon.NO)
-    ATHANASIUS = event("St. Athanasius (m)", Color.WHITE, Icon.NO)
-    PHILIP_JAMES = event("Ss. Philip and James (f)", Color.RED, Icon.NO)
-    JOHN_AVILA = event("St. John of Avila (om)", Color.WHITE, Icon.NO)
-    DAMIEN_VEUSTER = event("St. Damien de Veuster (om)", Color.WHITE, Icon.NO)
-    NEREUS_ACHILLEUS = event("Ss. Nereus and Achilleus (om)", Color.RED, Icon.NO)
-    PANCRAS = event("St. Pancras (om)", Color.RED, Icon.NO)
-    MATTHIAS = event("St. Matthias (f)", Color.RED, Icon.NO)
-    JOHNI = event("St. John I (om)", Color.RED, Icon.NO)
-    BERNARDINE_SIENA = event("St. Bernardine of Siena (om)", Color.WHITE, Icon.NO)
-    CHRISTOPHER_MAGALLANES = event(
-        "Ss. Christopher Magallanes and companions (om)", Color.RED, Icon.NO
-    )
-    RITA_CASCIA = event("St. Rita of Cascia (om)", Color.WHITE, Icon.NO)
-    BEDE = event("St. Bede the Venerable (om)", Color.WHITE, Icon.NO)
-    GREGORYVII = event("St. Gregory VII (om)", Color.WHITE, Icon.NO)
-    MARY_MAGDALENE_PAZZI = event(
-        "St. Mary Magdalene de' Pazzi (om)", Color.WHITE, Icon.NO
-    )
-    PHILIP_NERI = event("St. Philip Neri (m)", Color.WHITE, Icon.NO)
-    AUGUSTINE_CANTERBURY = event(
-        "St. Augustine of Canterbury (om)", Color.WHITE, Icon.NO
-    )
-    PAULVI = event("St. Paul VI (om)", Color.WHITE, Icon.NO)
-    JUSTIN = event("St. Justin (m)", Color.RED, Icon.NO)
-    MARCELLINUS_PETER = event("Ss. Marcellinus and Peter (om)", Color.RED, Icon.NO)
-    CHARLES_LWANGA = event("Ss. Charles Lwanga and companions (m)", Color.RED, Icon.NO)
-    BONIFACE = event("St. Boniface (m)", Color.RED, Icon.NO)
-    NORBERT = event("St. Norbert (om)", Color.WHITE, Icon.NO)
-    EPHREM = event("St. Ephrem (om)", Color.WHITE, Icon.NO)
-    BARNABAS = event("St. Barnabas (m)", Color.RED, Icon.NO)
-    ANTHONY_PADUA = event("St. Anthony of Padua (m)", Color.WHITE, Icon.NO)
-    ROMUALD = event("St. Romuald (om)", Color.WHITE, Icon.NO)
-    ALOYSIUS_GONZAGA = event("St. Aloysius Gonzaga (m)", Color.WHITE, Icon.NO)
-    PAULINUS_NOLA = event("St. Paulinus of Nola (om)", Color.WHITE, Icon.NO)
-    FISHER_MORE = event("Ss. John Fisher and Thomas More (om)", Color.RED, Icon.NO)
-    BAPTIST_NATIVITY = event(
-        "Nativity of St. John the Baptist (s)", Color.WHITE, Icon.NO
-    )
-    CYRIL_ALEXANDRIA = event("St. Cyril of Alexandria (om)", Color.WHITE, Icon.NO)
-    IRENAEUS = event("St. Irenaeus (m)", Color.RED, Icon.NO)
-    PETER_PAUL = event("Ss. Peter and Paul (s)", Color.RED, Icon.NO)
-    MARTYRS_ROME = event("First Martyrs of Rome (om)", Color.RED, Icon.NO)
-    JUNIPERO_SERRA = event("St. Junípero Serra (om)", Color.WHITE, Icon.NO)
-    THOMAS = event("St. Thomas (f)", Color.RED, Icon.NO)
-    ELIZABETH_PORTUGAL = event("St. Elizabeth of Portugal (om)", Color.WHITE, Icon.NO)
-    ANTHONY_ZACCARIA = event("St. Anthony Zaccaria (om)", Color.WHITE, Icon.NO)
-    MARIA_GORETTI = event("St. Maria Goretti (om)", Color.RED, Icon.NO)
-    AUGUSTINE_ZHAO_RONG = event(
-        "Ss. Augustine Zhao Rong and companions (om)", Color.RED, Icon.NO
-    )
-    BENEDICT = event("St. Benedict (m)", Color.WHITE, Icon.NO)
-    HENRY = event("St. Henry (om)", Color.WHITE, Icon.NO)
-    KATERI_TEKAKWITHA = event("St. Kateri Tekakwitha (m)", Color.WHITE, Icon.NO)
-    BONAVENTURE = event("St. Bonaventure (m)", Color.WHITE, Icon.NO)
-    CAMILLUS_LELLIS = event("St. Camillus de Lellis (om)", Color.WHITE, Icon.NO)
-    APOLLINARIS = event("St. Apollinaris (om)", Color.WHITE, Icon.NO)
-    LAWRENCE_BRINDISI = event("St. Lawrence of Brindisi (om)", Color.WHITE, Icon.NO)
-    MARY_MAGDALENE = event("St. Mary Magdalene (f)", Color.WHITE, Icon.NO)
-    BRIDGET = event("St. Bridget (om)", Color.WHITE, Icon.NO)
-    SHARBEL = event("St. Sharbel Makhlūf (om)", Color.WHITE, Icon.NO)
-    JAMES = event("St. James (f)", Color.RED, Icon.NO)
-    JOACHIM_ANNE = event("Ss. Joachim and Anne (m)", Color.WHITE, Icon.NO)
-    BETHANY = event("Ss. Martha, Mary, and Lazarus (m)", Color.WHITE, Icon.NO)
-    PETER_CHRYSOLOGUS = event("St. Peter Chrysologus (om)", Color.WHITE, Icon.NO)
-    IGNATIUS_LOYOLA = event("St. Ignatius of Loyola (m)", Color.WHITE, Icon.NO)
-    ALPHONSUS_LIGUORI = event("St. Alphonsus Mary Liguori (m)", Color.WHITE, Icon.NO)
-    EUSEBIUS_VERCELLI = event("St. Eusebius of Vercelli (om)", Color.WHITE, Icon.NO)
-    PETER_EYMARD = event("St. Peter Julian Eymard (om)", Color.WHITE, Icon.NO)
-    JOHN_VIANNEY = event("St. John Mary Vianney (m)", Color.WHITE, Icon.NO)
-    MARY_MAJOR = event("Dedication of St. Mary Major (om)", Color.WHITE, Icon.NO)
-    SIXTUS = event("Ss. Sixtus II and companions (om)", Color.RED, Icon.NO)
-    CAJETAN = event("St. Cajetan (om)", Color.WHITE, Icon.NO)
-    DOMINIC = event("St. Dominic (m)", Color.WHITE, Icon.NO)
-    TERESA_BENEDICTA = event(
-        "St. Teresa Benedicta of the Cross (om)", Color.RED, Icon.NO
-    )
-    LAWRENCE = event("St. Lawrence (f)", Color.RED, Icon.NO)
-    CLARE = event("St. Clare (m)", Color.WHITE, Icon.NO)
-    JANE_CHANTAL = event("St. Jane Frances de Chantal (om)", Color.WHITE, Icon.NO)
-    PONTIAN_HIPPOLYTUS = event("Ss. Pontian and Hippolytus (om)", Color.RED, Icon.NO)
-    MAXIMILIAN_KOLBE = event("St. Maximilian Mary Kolbe (m)", Color.RED, Icon.NO)
-    STEPHEN_HUNGARY = event("St. Stephen of Hungary (om)", Color.WHITE, Icon.NO)
-    JOHN_EUDES = event("St. John Eudes (om)", Color.WHITE, Icon.NO)
-    BERNARD = event("St. Bernard (m)", Color.WHITE, Icon.NO)
-    PIUSX = event("St. Pius X (m)", Color.WHITE, Icon.NO)
-    ROSE_LIMA = event("St. Rose of Lima (om)", Color.WHITE, Icon.NO)
-    BARTHOLOMEW = event("St. Bartholomew (f)", Color.RED, Icon.NO)
-    LOUIS = event("St. Louis (om)", Color.WHITE, Icon.NO)
-    JOSEPH_CALASANZ = event("St. Joseph Calasanz (om)", Color.WHITE, Icon.NO)
-    MONICA = event("St. Monica (m)", Color.WHITE, Icon.NO)
-    AUGUSTINE = event("St. Augustine (m)", Color.WHITE, Icon.NO)
-    BAPTIST_PASSION = event("Passion of St. John the Baptist (m)", Color.RED, Icon.NO)
-    GREGORY = event("St. Gregory the Great (m)", Color.WHITE, Icon.NO)
-    PETER_CLAVER = event("St. Peter Claver (m)", Color.WHITE, Icon.NO)
-    JOHN_CHRYSOSTOM = event("St. John Chrysostom (m)", Color.WHITE, Icon.NO)
-    CORNELIUS_CYPRIAN = event("Ss. Cornelius and Cyprian (m)", Color.RED, Icon.NO)
-    HILDEGARD = event("St. Hildegard of Bingen (om)", Color.WHITE, Icon.NO)
-    ROBERT_BELLARMINE = event("St. Robert Bellarmine (om)", Color.WHITE, Icon.NO)
-    JANUARIUS = event("St. Januarius (om)", Color.RED, Icon.NO)
-    ANDREW_KIM = event(
-        "Ss. Andrew Kim Tae-gŏn, Paul Chŏng Ha-sang, and companions (m)",
-        Color.RED,
-        Icon.NO,
-    )
-    MATTHEW = event("St. Matthew (f)", Color.RED, Icon.NO)
-    PIUS_PIETRELCINA = event("St. Pius of Pietrelcina (m)", Color.WHITE, Icon.NO)
-    COSMAS_DAMIAN = event("Ss. Cosmas and Damian (om)", Color.RED, Icon.NO)
-    VINCENT_PAUL = event("St. Vincent de Paul (m)", Color.WHITE, Icon.NO)
-    WENCESLAUS = event("St. Wenceslaus (om)", Color.RED, Icon.NO)
-    LAWRENCE_RUIZ = event("St. Lawrence Ruiz and companions (om)", Color.RED, Icon.NO)
-    ARCHANGELS = event("Holy Archangels (f)", Color.WHITE, Icon.NO)
-    JEROME = event("St. Jerome (m)", Color.WHITE, Icon.NO)
-    THERESE = event("St. Thérèse of the Child Jesus (m)", Color.WHITE, Icon.NO)
-    GUARDIAN_ANGELS = event("Holy Guardian Angels (m)", Color.WHITE, Icon.NO)
-    FRANCIS_ASSISI = event("St. Francis of Assisi (m)", Color.WHITE, Icon.NO)
-    FAUSTINA = event("St. Faustina Kowalska (om)", Color.WHITE, Icon.NO)
-    BRUNO = event("St. Bruno (om)", Color.WHITE, Icon.NO)
-    MARIE_DUROCHER = event("Bl. Marie Rose Durocher (om)", Color.WHITE, Icon.NO)
-    DENIS = event("Ss. Denis and companions (om)", Color.RED, Icon.NO)
-    JOHN_NEWMAN = event("St. John Henry Newman (om)", Color.WHITE, Icon.NO)
-    JOHN_LEONARDI = event("St. John Leonardi (om)", Color.WHITE, Icon.NO)
-    JOHNXXIII = event("St. John XXIII (om)", Color.WHITE, Icon.NO)
-    CALLISTUSI = event("St. Callistus I (om)", Color.RED, Icon.NO)
-    TERESA = event("St. Teresa of Jesus (m)", Color.WHITE, Icon.NO)
-    HEDWIG = event("St. Hedwig (om)", Color.WHITE, Icon.NO)
-    MARGARET_ALACOQUE = event("St. Margaret Mary Alacoque (om)", Color.WHITE, Icon.NO)
-    IGNATIUS_ANTIOCH = event("St. Ignatius of Antioch (m)", Color.RED, Icon.NO)
-    LUKE = event("St. Luke (f)", Color.RED, Icon.NO)
-    JOHN_BREBEUF = event(
-        "Ss. John de Brébeuf, Isaac Jogues, and companions (m)", Color.RED, Icon.NO
-    )
-    PAUL_CROSS = event("St. Paul of the Cross (om)", Color.WHITE, Icon.NO)
-    JPII = event("St. John Paul II (om)", Color.WHITE, Icon.NO)
-    JOHNPAULII = JPII
-    JOHN_CAPISTRANO = event("St. John of Capistrano (om)", Color.WHITE, Icon.NO)
-    ANTHONY_CLARET = event("St. Anthony Mary Claret (om)", Color.WHITE, Icon.NO)
-    SIMON_JUDE = event("Ss. Simon and Jude (f)", Color.RED, Icon.NO)
-    ALL_SAINTS = event("All Saints (s)", Color.WHITE, Icon.NO)
-    ALL_SOULS = event("All Souls", Color.BLACK, Icon.NO)
-    MARTIN_PORRES = event("St. Martin de Porres (om)", Color.WHITE, Icon.NO)
-    CHARLES_BORROMEO = event("St. Charles Borromeo (m)", Color.WHITE, Icon.NO)
-    LATERAN = event("Dedication of the Lateran Basilica (f)", Color.WHITE, Icon.NO)
-    LEO = event("St. Leo the Great (m)", Color.WHITE, Icon.NO)
-    MARTIN_TOURS = event("St. Martin of Tours (m)", Color.WHITE, Icon.NO)
-    JOSAPHAT = event("St. Josaphat (m)", Color.RED, Icon.NO)
-    FRANCES_CABRINI = event("St. Frances Xavier Cabrini (m)", Color.WHITE, Icon.NO)
-    ALBERT = event("St. Albert the Great (om)", Color.WHITE, Icon.NO)
-    MARGARET_SCOTLAND = event("St. Margaret of Scotland (om)", Color.WHITE, Icon.NO)
-    GERTRUDE = event("St. Gertrude (om)", Color.WHITE, Icon.NO)
-    ELIZABETH_HUNGARY = event("St. Elizabeth of Hungary (m)", Color.WHITE, Icon.NO)
-    BASILICAS_PETER_PAUL = event(
-        "Dedication of the Basilicas of Ss. Peter and Paul (om)", Color.WHITE, Icon.NO
-    )
-    ROSE_DUCHESNE = event("St. Rose Philippine Duchesne (om)", Color.WHITE, Icon.NO)
-    CECILIA = event("St. Cecilia (m)", Color.RED, Icon.NO)
-    CLEMENTI = event("St. Clement I (om)", Color.RED, Icon.NO)
-    COLUMBAN = event("St. Columban (om)", Color.WHITE, Icon.NO)
-    MIGUEL_PRO = event("Bl. Miguel Agustín Pro (om)", Color.RED, Icon.NO)
-    ANDREW_DUNG_LAC = event(
-        "Ss. Andrew Dũng-Lạc and companions (m)", Color.RED, Icon.NO
-    )
-    CATHERINE_ALEXANDRIA = event("St. Catherine of Alexandria (om)", Color.RED, Icon.NO)
-    ANDREW = event("St. Andrew (f)", Color.RED, Icon.NO)
-    FRANCIS_XAVIER = event("St. Francis Xavier (m)", Color.WHITE, Icon.NO)
-    JOHN_DAMASCENE = event("St. John Damascene (om)", Color.WHITE, Icon.NO)
-    NICHOLAS = event("St. Nicholas (om)", Color.WHITE, Icon.NO)
-    AMBROSE = event("St. Ambrose (m)", Color.WHITE, Icon.NO)
-    JUAN_DIEGO = event("St. Juan Diego Cuauhtlatoatzin (om)", Color.WHITE, Icon.NO)
-    DAMASUSI = event("St. Damasus I (om)", Color.WHITE, Icon.NO)
-    LUCY = event("St. Lucy (m)", Color.RED, Icon.NO)
-    JOHN_CROSS = event("St. John of the Cross (m)", Color.WHITE, Icon.NO)
-    PETER_CANISIUS = event("St. Peter Canisius (om)", Color.WHITE, Icon.NO)
-    JOHN_KANTY = event("St. John of Kanty (om)", Color.WHITE, Icon.NO)
-    STEPHEN = event("St. Stephen (f)", Color.RED, Icon.NO)
-    JOHN = event("St. John (f)", Color.WHITE, Icon.NO)
-    HOLY_INNOCENTS = event("Holy Innocents (f)", Color.RED, Icon.NO)
-    THOMAS_BECKET = event("St. Thomas Becket (om)", Color.RED, Icon.NO)
-    SYLVESTER = event("St. Sylvester I (om)", Color.WHITE, Icon.NO)
-
-    OP_HOLY_NAME = event("Most Holy Name of Jesus (II)", Color.WHITE, Icon.OP)
-    OP_EPIPHANY = event("Epiphany of the Lord (I)", Color.WHITE, Icon.OP)
-    OP_BAPTISM = event("Baptism of the Lord (II)", Color.WHITE, Icon.OP)
-    OP_CROWN = event("Crown of Thorns (III)", Color.RED, Icon.OP)
-    OP_CORPUS = event("Corpus Christi (I)", Color.WHITE, Icon.OP)
-    OP_SACRED_HEART = event("Most Sacred Heart of Jesus (I)", Color.WHITE, Icon.OP)
-    OP_SANGUIS = event("Sanguis Christi (I)", Color.RED, Icon.OP)
-
-    OP_CO = event("Christmas Octave (II)", Color.WHITE, Icon.OP)
-    OP_CO_SUN = event("Sunday in the Octave (II)", Color.WHITE, Icon.OP)
-    OP_CO_8 = event("Octave Day of the Nativity (I)", Color.WHITE, Icon.OP)
-    OP_CF = event("Feria (IV)", Color.WHITE, Icon.OP)
-    OP_HOLY_FAMILY = event("Holy Family (II)", Color.WHITE, Icon.OP)
-    OP_AEF = event("Feria (IV)", Color.GREEN, Icon.OP)
-    OP_AE2 = event(
-        "Second Sunday after Epiphany (II)\n(Sunday I after Octave)",
-        Color.GREEN,
-        Icon.OP,
-    )
-    OP_AE3 = event(
-        "Third Sunday after Epiphany (II)\n(Sunday II after Octave)",
-        Color.GREEN,
-        Icon.OP,
-    )
-    OP_70 = event("Septuagesima Sunday (II)", Color.PURPLE, Icon.OP)
-    OP_60 = event("Sexagesima Sunday (II)", Color.PURPLE, Icon.OP)
-    OP_50 = event("Quinquagesima Sunday (II)", Color.PURPLE, Icon.OP)
-    OP_ASH_WEDNESDAY = event("Ash Wednesday (I)", Color.PURPLE, Icon.OP)
-    OP_LF = event("Feria (III)", Color.PURPLE, Icon.OP)
-    OP_L1 = event("First Sunday of Lent (I)", Color.PURPLE, Icon.OP)
-    OP_L2 = event("Second Sunday of Lent (I)", Color.PURPLE, Icon.OP)
-    OP_L3 = event("Third Sunday of Lent (I)", Color.PURPLE, Icon.OP)
-    OP_L4 = event("Fourth Sunday of Lent (I)", Color.PINK, Icon.OP)
-    OP_PASSION = event("Passion Sunday (I)", Color.PURPLE, Icon.OP)
-    OP_L5 = OP_PASSION
-    OP_PALM = event("Palm Sunday (I)", Color.PURPLE, Icon.OP)
-    OP_L6 = OP_PALM
-    OP_HOLY_WEEK_MON = event("Monday of Holy Week (I)", Color.PURPLE, Icon.OP)
-    OP_HOLY_WEEK_TUE = event("Tuesday of Holy Week (I)", Color.PURPLE, Icon.OP)
-    OP_HOLY_WEEK_WED = event("Wednesday of Holy Week (I)", Color.PURPLE, Icon.OP)
-    OP_HOLY_THURSDAY = event("Holy Thursday (I)", Color.WHITE, Icon.OP)
-    OP_GOOD_FRIDAY = event("Good Friday (I)", Color.BLACK, Icon.OP)
-    OP_HOLY_SATURDAY = event("Holy Saturday (I)", Color.WHITE, Icon.OP)
-    OP_EASTER = event("Easter Sunday (I)", Color.WHITE, Icon.OP)
-    OP_E0 = OP_EASTER
-    OP_EO = event("Easter Octave (I)", Color.WHITE, Icon.OP)
-    OP_EO_SUN = event("Octave of the Resurrection (I)", Color.WHITE, Icon.OP)
-    OP_E1 = OP_EO_SUN
-    OP_EF = event("Feria (IV)", Color.WHITE, Icon.OP)
-    OP_E2 = event(
-        "Second Sunday after Easter (II)\n(Sunday I after Octave)", Color.WHITE, Icon.OP
-    )
-    OP_E3 = event(
-        "Third Sunday after Easter (II)\n(Sunday II after Octave)", Color.WHITE, Icon.OP
-    )
-    OP_E4 = event(
-        "Fourth Sunday after Easter (II)\n(Sunday III after Octave)", Color.WHITE, Icon.OP
-    )
-    OP_E5 = event(
-        "Fifth Sunday after Easter (II)\n(Sunday IV after Octave)", Color.WHITE, Icon.OP
-    )
-    OP_ASCENSION_VIGIL = event("Vigil of the Ascension (II)", Color.WHITE, Icon.OP)
-    OP_ASCENSION = event("Ascension of the Lord (I)", Color.WHITE, Icon.OP)
-    OP_ASCENSION_SUN = event("Sunday after the Ascension (II)\n(Sunday in the Octave of Ascension)", Color.WHITE, Icon.OP)
-    OP_PENTECOST_VIGIL = event("Vigil of Pentecost (I)", Color.RED, Icon.OP)
-    OP_PENTECOST = event("Pentecost (I)", Color.RED, Icon.OP)
-    OP_PO = event("Pentecost Octave (I)", Color.RED, Icon.OP)
-    OP_TRINITY = event("Trinity Sunday (I)", Color.WHITE, Icon.OP)
-    OP_AP2 = event("Second Sunday after Pentecost (II)\n(Sunday in the Octave of Corpus Christi)", Color.GREEN, Icon.OP)
-    OP_AP3 = event("Third Sunday after Pentecost (II)\n(Sunday in the Octave of the Sacred Heart)", Color.GREEN, Icon.OP)
-    OP_AP4 = event("Fourth Sunday after Pentecost (II)\n(Sunday II after Octave)", Color.GREEN, Icon.OP)
-    OP_AP5 = event("Fifth Sunday after Pentecost (II)\n(Sunday III after Octave)", Color.GREEN, Icon.OP)
-    OP_AP6 = event("Sixth Sunday after Pentecost (II)\n(Sunday IV after Octave)", Color.GREEN, Icon.OP)
-    OP_AP7 = event("Seventh Sunday after Pentecost (II)\n(Sunday V after Octave)", Color.GREEN, Icon.OP)
-
-    OP_BVM = event("Our Lady on Saturday (IV)", Color.WHITE, Icon.OP)
-    OP_PURIFICATION_BVM = event("Purification of Our Lady (II)", Color.WHITE, Icon.OP)
-    OP_APPARITION_BVM = event("Apparition of Our Lady (III)", Color.WHITE, Icon.OP)
-    OP_ANNUNCIATION = event("Annunciation of Our Lady (I)", Color.WHITE, Icon.OP)
-    OP_COMPASSION_BVM = event("Compassion of Our Lady (m)", Color.WHITE, Icon.OP)
-    OP_MEDIATRIX = event("Our Lady, Mediatrix of all Graces (III)", Color.WHITE, Icon.OP)
-    OP_QUEEN = event("Our Lady, Queen (III)", Color.WHITE, Icon.OP)
-    OP_VISITATION = event("Visitation of Our Lady (II)", Color.WHITE, Icon.OP)
-
-    OP_EMBER_W = event("Ember Wednesday (II)", Color.PURPLE, Icon.OP)
-    OP_EMBER_F = event("Ember Friday (II)", Color.PURPLE, Icon.OP)
-    OP_EMBER_S = event("Ember Saturday (II)", Color.PURPLE, Icon.OP)
-    OP_EMBER_W_P = event("Ember Wednesday (I)", Color.RED, Icon.OP)
-    OP_EMBER_F_P = event("Ember Friday (I)", Color.RED, Icon.OP)
-    OP_EMBER_S_P = event("Ember Saturday (I)", Color.RED, Icon.OP)
-
-    OP_ZEDISLAVA = event("St. Zedislava (III)", Color.WHITE, Icon.OP)
-    OP_HILARY = event("St. Hilary (III)", Color.WHITE, Icon.OP)
-    OP_FELIX = event("St. Felix (m)", Color.RED, Icon.OP)
-    OP_FRANCIS_CAPILLAS = event("St. Francis de Capillas (III)", Color.RED, Icon.OP)
-    OP_MAURUS = event("St. Maurus (m)", Color.WHITE, Icon.OP)
-    OP_PAUL_HERMIT = event("St. Paul the first hermit (m)", Color.WHITE, Icon.OP)
-    OP_MARCELLUSI = event("St. Marcellus I (m)", Color.RED, Icon.OP)
-    OP_ANTHONY = event("St. Anthony (III)", Color.WHITE, Icon.OP)
-
-    OP_JOHN = event("St. John (I)", Color.WHITE, Icon.OP)
-    OP_HOLY_INNOCENTS = event("Holy Innocents (II)", Color.RED, Icon.OP)
-    OP_THOMAS_BECKET = event("St. Thomas Becket (III)", Color.RED, Icon.OP)
-    OP_SYLVESTER = event("St. Sylvester I (III)", Color.WHITE, Icon.OP)
-    OP_MARGARET_HUNGARY = event("St. Margaret of Hungary (III)", Color.WHITE, Icon.OP)
-    OP_PRISCA = event("St. Prisca (m)", Color.RED, Icon.OP)
-    OP_FABIAN_SEBASTIAN = event("Ss. Fabian and Sebastian (III)", Color.RED, Icon.OP)
-    OP_AGNES = event("St. Agnes (III)", Color.RED, Icon.OP)
-    OP_VINCENT = event("St. Vincent (III)", Color.RED, Icon.OP)
-    OP_RAYMOND_PEÑAFORT = event("St. Raymond of Peñafort (III)", Color.WHITE, Icon.OP)
-    OP_EMERENTIANA = event("St. Emerentiana (m)", Color.RED, Icon.OP)
-    OP_TIMOTHY = event("St. Timothy (m)", Color.RED, Icon.OP)
-    OP_POLYCARP = event("St. Timothy (m)", Color.RED, Icon.OP)
-    OP_JOHN_CHRYSOSTOM = event("St. John Chrysostom (III)", Color.WHITE, Icon.OP)
-    OP_JULIAN = event("St. Julian (m)", Color.WHITE, Icon.OP)
-    OP_PETER_NOLASCUS = event("St. Peter Nolascus (III)", Color.WHITE, Icon.OP)
-    OP_FRANCIS_SALES = event("St. Francis de Sales (III)", Color.WHITE, Icon.OP)
-    OP_MARTINA = event("St. Martina (m)", Color.RED, Icon.OP)
-    OP_JOHN_BOSCO = event("St. John Bosco (III)", Color.WHITE, Icon.OP)
-    OP_BLAISE = event("St. Blaise (m)", Color.RED, Icon.OP)
-    OP_ANDREW_CORSINI = event("St. Andrew Corsini (III)", Color.WHITE, Icon.OP)
-    OP_AGATHA = event("St. Agatha (III)", Color.RED, Icon.OP)
-    OP_VEDAST_AMAND = event("Ss. Vedast and Amand (IV)", Color.WHITE, Icon.OP)
-    OP_ROMUALD = event("St. Romuald (III)", Color.WHITE, Icon.OP)
-    OP_CYRIL_ALEXANDRIA = event("St. Cyril of Alexandria (III)", Color.WHITE, Icon.OP)
-    OP_SCHOLASTICA = event("St. Scholastica (III)", Color.WHITE, Icon.OP)
-    OP_SEVEN_FOUNDERS = event("Seven Holy Servite Founders (III)", Color.WHITE, Icon.OP)
-    OP_CATHERINE_RICCI = event("St. Catherine de Ricci (III)", Color.WHITE, Icon.OP)
-    OP_JORDAN_SAXONY = event("St. Jordan of Saxony (III)", Color.WHITE, Icon.OP)
-    OP_VALENTINE = event("St. Valentine (m)", Color.RED, Icon.OP)
-    OP_REGINALD = event("Bl. Reginald (m)", Color.WHITE, Icon.OP)
-    OP_JOHN_FIESOLE = event("Bl. John of Fiesole (m)", Color.WHITE, Icon.OP)
-    OP_CHAIR_PETER = event("Chair of St. Peter (II)", Color.WHITE, Icon.OP)
-    OP_PETER_DAMIAN = event("St. Peter Damian (III)", Color.WHITE, Icon.OP)
-    OP_MATTHIAS = event("St. Matthias (II)", Color.RED, Icon.OP)
-    OP_CASIMIR = event("St. Casimir (III)", Color.WHITE, Icon.OP)
-    OP_THOMAS_AQUINAS = event("St. Thomas Aquinas (I)", Color.WHITE, Icon.OP)
-    OP_JOHN_GOD = event("St. John of God (III)", Color.WHITE, Icon.OP)
-    OP_FRANCES_ROME = event("St. Frances of Rome (III)", Color.WHITE, Icon.OP)
-    OP_GREGORY = event("St. Gregory the Great (III)", Color.WHITE, Icon.OP)
-    OP_PATRICK = event("St. Patrick (III)", Color.WHITE, Icon.OP)
-    OP_CYRIL_JERUSALEM = event("St. Cyril of Jerusalem (III)", Color.WHITE, Icon.OP)
-    OP_JOSEPH = event("St. Joseph (I)", Color.WHITE, Icon.OP)
-    OP_AMBROSE_SANSEDONIUS = event("Bl. Ambrose Sansedonius (m)", Color.WHITE, Icon.OP)
-    OP_BENEDICT = event("St. Benedict (III)", Color.WHITE, Icon.OP)
-    OP_GABRIEL = event("St. Gabriel (III)", Color.WHITE, Icon.OP)
-    OP_JOHN_DAMASCENE = event("St. John Damascene (III)", Color.WHITE, Icon.OP)
-    OP_LEO = event("St. Leo the Great (III)", Color.WHITE, Icon.OP)
-    OP_TIBURTIUS = event("Ss. Tiburtius, Valerian, and Maximus (m)", Color.RED, Icon.OP)
-    OP_AGNES_MONTEPULCIANO = event(
-        "St. Agnes of Montepulciano (III)", Color.WHITE, Icon.OP
-    )
-    OP_ANSELM = event("St. Anselm (III)", Color.WHITE, Icon.OP)
-    OP_GEORGE = event("St. George (m)", Color.RED, Icon.OP)
-    OP_MARK = event("St. Mark (II)\nGreater Litanies", Color.RED, Icon.OP)
-    OP_PAUL_CROSS = event("St. Paul of the Cross (III)", Color.WHITE, Icon.OP)
-    OP_LOUIS_MONTFORT = event("St. Louis de Montfort (m)", Color.WHITE, Icon.OP)
-    OP_PETER_MARTYR = event("St. Peter Martyr (II)", Color.RED, Icon.OP)
-    OP_CATHERINE_SIENA = event("St. Catherine of Siena (II)", Color.WHITE, Icon.OP)
-    OP_JOSEPH = event("St. Joseph (I)", Color.WHITE, Icon.OP)
-    OP_ATHANASIUS = event("St. Athanasius (III)", Color.WHITE, Icon.OP)
-    OP_ALEXANDER = event("Ss. Alexander, Eventius, and Theodulus (m)", Color.RED, Icon.OP)
-    OP_MONICA = event("St. Monica (III)", Color.WHITE, Icon.OP)
-    OP_PIUSV = event("St. Pius V (III)", Color.WHITE, Icon.OP)
-    OP_STANISLAUS = event("St. Stanislaus (III)", Color.RED, Icon.OP)
-    OP_GREGORY_NAZIANZEN = event("St. Gregory Nazianzen (III)", Color.WHITE, Icon.OP)
-    OP_ANTONINUS = event("St. Antoninus (III)", Color.WHITE, Icon.OP)
-    OP_GORDIAN = event("Ss. Gordian and Epimachus (m)", Color.RED, Icon.OP)
-    OP_PHILIP_JAMES = event("Ss. Philip and James (II)", Color.RED, Icon.OP)
-    OP_NEREUS = event("Ss. Nereus, Achilleus, and Pancras (m)", Color.RED, Icon.OP)
-    OP_IMELDA = event("Bl. Imelda (m)", Color.WHITE, Icon.OP)
-    OP_JOHN_BAPTIST_DE_LA_SALLE = event(
-        "St. John Baptist de la Salle (III)", Color.WHITE, Icon.OP
-    )
-    OP_VENANTIUS = event("St. Venantius (III)", Color.RED, Icon.OP)
-    OP_PETER_CELESTINE = event("St. Peter Celestine (III)", Color.WHITE, Icon.OP)
-    OP_PUDENTIANA = event("St. Pudentiana (m)", Color.WHITE, Icon.OP)
-    OP_DOMINIC_TRANSLATION = event("Translation of Our Holy Father Dominic (III)", Color.WHITE, Icon.OP)
-    OP_URBANI = event("St. Urban I (III)", Color.RED, Icon.OP)
-    OP_PHILIP_NERI = event("St. Philip Neri (III)", Color.WHITE, Icon.OP)
-    OP_BEDE = event("St. Bede the Venerable (III)", Color.WHITE, Icon.OP)
-    OP_WILLIAM = event("Bls. William and companions (m)", Color.RED, Icon.OP)
-    OP_PETRONILLA = event("St. Petronilla (III)", Color.WHITE, Icon.OP)
-    OP_ANGELA_MERICI = event("St. Angela Merici (m)", Color.WHITE, Icon.OP)
-    OP_SADOC = event("Bls. Sadoc and companions (m)", Color.RED, Icon.OP)
-    OP_MARCELLINUS_PETER = event("Ss. Marcellinus and Peter (m)", Color.RED, Icon.OP)
-    OP_PETER_SANZ = event("Ss. Peter Sanz and companions (m)", Color.RED, Icon.OP)
-    OP_FRANCIS_CARACCIOLO = event("St. Francis Caracciolo (m)", Color.WHITE, Icon.OP)
-    OP_NORBERT = event("St. Norbert (III)", Color.WHITE, Icon.OP)
-    OP_MEDARD = event("St. Medard (m)", Color.WHITE, Icon.OP)
-    OP_DIANA = event("Bls. Diana, Cecilia, and Amata (m)", Color.WHITE, Icon.OP)
-    OP_PRIMUS = event("Ss. Primus and Felician (m)", Color.RED, Icon.OP)
-    OP_JOHN_DOMINIC = event("Bl. John Dominic (m)", Color.WHITE, Icon.OP)
-    OP_BARNABAS = event("St. Barnabas (III)", Color.RED, Icon.OP)
-    OP_BASILIDES = event("Ss. Basilides, Cyrinus, Nabor, and Nazarius (m)", Color.RED, Icon.OP)
-    OP_ANTHONY_PADUA = event("St. Anthony of Padua (III)", Color.WHITE, Icon.OP)
-    OP_BASIL = event("St. Basil the Great (III)", Color.WHITE, Icon.OP)
-    OP_VITUS = event("Ss. Vitus, Modest, and Crescentia (m)", Color.RED, Icon.OP)
-    OP_QUIRICUS = event("Ss. Quiricus and Julitta (m)", Color.RED, Icon.OP)
-    OP_EPHREM = event("St. Ephrem the Syrian (III)", Color.WHITE, Icon.OP)
-    OP_MARK_MARCELLIAN = event("Ss. Mark and Marcellian (m)", Color.RED, Icon.OP)
-    OP_GERVASE = event("Ss. Gervase and Protasus (m)", Color.RED, Icon.OP)
-    OP_INNOCENTV = event("Bl. Innocent V (m)", Color.WHITE, Icon.OP)
-    OP_BAPTIST_NATIVITY_VIGIL = event("Vigil of the Nativity of St. John the Baptist (II)", Color.PURPLE, Icon.OP)
-    OP_BAPTIST_NATIVITY = event("Nativity of St. John the Baptist (I)", Color.WHITE, Icon.OP)
-    OP_JOHN_PAUL = event("Ss. John and Paul (III)", Color.RED, Icon.OP)
-    OP_PETER_PAUL = event("Ss. Peter and Paul (I)", Color.RED, Icon.OP)
-    OP_PAUL = event("St. Paul (III)", Color.RED, Icon.OP)
-    OP_PROCESSUS = event("Ss. Processus and Martinian (m)", Color.RED, Icon.OP)
-    OP_IRENAEUS = event("St. Irenaeus (III)", Color.RED, Icon.OP)
-    OP_ANTHONY_ZACCARIA = event("St. Anthony Mary Zaccaria (III)", Color.WHITE, Icon.OP)
-    OP_BENEDICTXI = event("Bl. Benedict XI (m)", Color.WHITE, Icon.OP)
-    OP_FISHER_MORE = event("Ss. John Fisher and Thomas More (III)", Color.RED, Icon.OP)
-    OP_SEVEN_BROTHERS = event("Seven Holy Brothers (III)", Color.RED, Icon.OP)
-    OP_IGNATIUS_DELGADO = event("Ss. Ignatius Delgado, Dominic Henares, and companions (m)", Color.RED, Icon.OP)
-    OP_JOHN_GUALBERT = event("St. John Gualbert (III)", Color.WHITE, Icon.OP)
-    
-    OP_PARENTS = event("Deceased Parents", Color.BLACK, Icon.OP)
-    OP_CEMETERIES = event("Those buried in our cemeteries", Color.BLACK, Icon.OP)
-
-    POPE_ELECTION = event("Election of the Supreme Pontiff", Color.GENERIC, Icon.GENERIC)
-    POPE_INAUGURATION = event("Inauguration of the ministry of the Supreme Pontiff", Color.GENERIC, Icon.GENERIC)
-
-
-def mem(base: Event, *mems: Event) -> event:
+def mem(base: event, *mems: event) -> event:
     """Combine events on the OP calendar such that other feasts are listed as memorials.
-    >>> mem(Event.OP_CO_SUN, Event.OP_JOHN).title
+    >>> import lit_op
+    >>> mem(lit_op.CO_SUN, lit_op.JOHN).title
     'Sunday in the Octave (II)\\nmem. St. John'
-    >>> mem(Event.OP_CO_SUN, Event.OP_EMERENTIANA).title
+    >>> mem(lit_op.CO_SUN, lit_op.EMERENTIANA).title
     'Sunday in the Octave (II)\\nmem. St. Emerentiana'
     """
     ending = re.compile(r"\s+\([IVm]+\)$")
-    title = base.value.title
+    title = base.title
     for m in mems:
-        mtitle = re.sub(ending, "", m.value.title)
+        mtitle = re.sub(ending, "", m.title)
         title += f"\nmem. {mtitle}"
-    return event(title, base.value.color, base.value.icon)
+    return event(title, base.color, base.icon)
 
 
-def comm(e: Event) -> event:
+def comm(e: event) -> event:
     """Convert a memorial or optional memorial into an Advent or Lent commemoration.
-    >>> comm(Event.PATRICK).color == Color.PURPLE
+    >>> import lit_no
+    >>> comm(lit_no.PATRICK).color == Color.PURPLE
     True
-    >>> comm(Event.PATRICK).title
+    >>> comm(lit_no.PATRICK).title
     'St. Patrick (c)'
     """
-    title = e.value.title.replace("(m)", "(c)")
+    title = e.title.replace("(m)", "(c)")
     title = title.replace("(om)", "(c)")
-    return event(title, Color.PURPLE, e.value.icon)
+    return event(title, Color.PURPLE, e.icon)
+
+
+def anniversary(
+    title: str, color: Color, icon: Icon, first_year: int, current_year: int
+) -> event | None:
+    dy = current_year - first_year
+    if dy < 1:
+        return None
+    txt = ordinal_text(dy)
+    return event(title.format(txt), color, icon)
+
+
+def ordinal_text(i: int) -> str:
+    """Return the English ordinal numeral and abbreviation.
+    >>> ordinal_text(1)
+    '1st'
+    >>> ordinal_text(2)
+    '2nd'
+    >>> ordinal_text(3)
+    '3rd'
+    >>> ordinal_text(4)
+    '4th'
+    >>> ordinal_text(5)
+    '5th'
+    >>> ordinal_text(31)
+    '31st'
+    >>> ordinal_text(32)
+    '32nd'
+    >>> ordinal_text(33)
+    '33rd'
+    >>> ordinal_text(34)
+    '34th'
+    >>> ordinal_text(1023)
+    '1023rd'
+    >>> ordinal_text(1013)
+    '1013th'
+    """
+    txt = f"{i}th"
+    digits = i % 100
+    if digits > 10 and digits < 20:
+        txt = f"{i}th"
+    else:
+        digits = i % 10
+        if digits == 1:
+            txt = f"{i}st"
+        elif digits == 2:
+            txt = f"{i}nd"
+        elif digits == 3:
+            txt = f"{i}rd"
+    return txt

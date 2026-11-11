@@ -1,21 +1,24 @@
-from weeks import week_event, Week
-from events import event, Event, mem
+from weeks import week_event
+from events import event, mem
+import lit_no_w, lit_no, lit_op, annual
 
 YEAR = 2026
 
 # Only include events that overlap with the week of 2027-01-01.
-events: list[tuple[int, int, int, Week | Event | week_event | event]] = [
-    (YEAR, 12, 27, Week.C2),
-    (YEAR, 12, 27, Event.HOLY_FAMILY),
-    (YEAR, 12, 27, mem(Event.OP_CO_SUN, Event.OP_JOHN)),
-    (YEAR, 12, 28, Event.HOLY_INNOCENTS),
-    (YEAR, 12, 28, mem(Event.OP_HOLY_INNOCENTS, Event.OP_CO)),
-    (YEAR, 12, 29, Event.CO),
-    (YEAR, 12, 29, Event.THOMAS_BECKET),
-    (YEAR, 12, 29, mem(Event.OP_CO, Event.OP_THOMAS_BECKET)),
-    (YEAR, 12, 30, Event.CO),
-    (YEAR, 12, 30, Event.OP_CO),
-    (YEAR, 12, 31, Event.CO),
-    (YEAR, 12, 31, Event.SYLVESTER),
-    (YEAR, 12, 31, mem(Event.OP_CO, Event.OP_SYLVESTER)),
+events: list[tuple[int, int, int, week_event | event]] = [
+    (YEAR, 12, 27, lit_no_w.C2),
+    (YEAR, 12, 27, lit_no.HOLY_FAMILY),
+    (YEAR, 12, 27, mem(lit_op.CO_SUN, lit_op.JOHN)),
+    (YEAR, 12, 28, lit_no.HOLY_INNOCENTS),
+    (YEAR, 12, 28, mem(lit_op.HOLY_INNOCENTS, lit_op.CO)),
+    (YEAR, 12, 29, lit_no.CO),
+    (YEAR, 12, 29, lit_no.THOMAS_BECKET),
+    (YEAR, 12, 29, mem(lit_op.CO, lit_op.THOMAS_BECKET)),
+    (YEAR, 12, 30, lit_no.CO),
+    (YEAR, 12, 30, lit_op.CO),
+    (YEAR, 12, 31, lit_no.CO),
+    (YEAR, 12, 31, lit_no.SYLVESTER),
+    (YEAR, 12, 31, mem(lit_op.CO, lit_op.SYLVESTER)),
+    (YEAR, 5, 8, annual.pope_election(2025, YEAR)),
+    (YEAR, 5, 18, annual.pope_inauguration(2025, YEAR)),
 ]
