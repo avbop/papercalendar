@@ -6,7 +6,6 @@ from icons import Icon
 from util import *
 from events import event
 from weeks import week_event
-import data
 
 
 class week:
@@ -20,7 +19,8 @@ class week:
         self.color: Color = e.color
 
     def filename(self):
-        return self.id.strftime("%Y-%m-%d")
+        d = self.id.strftime("%Y-%m-%d")
+        return f"{d}.jpg"
 
     def __str__(self):
         d = self.id.strftime("%Y-%m-%d")
@@ -52,13 +52,9 @@ class calendar:
 
     def get_week(self, id: date) -> week:
         id = week_key(id)
-        if id not in self._weeks:
-            data.add_events(self, id.year)
         return self._weeks.get(id, week(id, week_event("", Color.DEFAULT)))
 
     def get_day(self, id: date) -> day:
-        if id not in self._days:
-            data.add_events(self, id.year)
         return self._days.get(id, day(id))
 
 

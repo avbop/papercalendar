@@ -15,3 +15,4 @@ class Color(StrEnum):
     GENERIC = BLACK
     DEFAULT = BLACK
     DEBUG = "red"
+    BORDER = "#dddddd"

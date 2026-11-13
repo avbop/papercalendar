@@ -1,10 +1,6 @@
 import math
 from PIL import ImageFont
 
-# files
-OUT_DIR = "out"
-OUT_FMT = OUT_DIR + "/{}.jpg"
-
 # page size
 _DPI = 300  # px/in
 _PAGE_WIDTH = 11.7  # in
@@ -19,7 +15,6 @@ WEEK_INFO_Y = 250
 
 # day info formatting
 BORDER_WIDTH = 5
-BORDER_COLOUR = "#dddddd"
 BORDER_OFFSET = int(HEIGHT * 0.05)
 TEXT_MARGIN = 40
 DAY_FONT = ImageFont.truetype("assets/font/Charter Regular.ttf", 60)
