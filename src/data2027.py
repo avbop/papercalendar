@@ -552,8 +552,10 @@ events: list[tuple[int, int, int, week_event | event]] = [
     (YEAR, 12, 30, lit_no.CO),
     (YEAR, 12, 31, lit_no.CO),
     (YEAR, 12, 31, lit_no.SYLVESTER),
-    (YEAR, 1, 1, lit_op.CO_SUN),
+    (YEAR, 1, 1, lit_op.CO_8),
     (YEAR, 1, 2, lit_op.BVM),
+    (YEAR, 1, 3, lit_op.HOLY_NAME),
+    (YEAR, 1, 4, lit_op.CF),
     (YEAR, 5, 8, annual.pope_election(2025, YEAR)),
     (YEAR, 5, 18, annual.pope_inauguration(2025, YEAR)),
 ]
