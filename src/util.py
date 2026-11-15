@@ -1,5 +1,4 @@
 from enum import IntEnum
-from datetime import date, timedelta
 
 
 class Weekday(IntEnum):

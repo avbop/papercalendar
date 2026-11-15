@@ -1,5 +1,5 @@
-from weeks import week_event
 from colors import Color
+from weeks import week_event
 
 A1 = week_event("First Week of Advent", Color.PURPLE)
 A2 = week_event("Second Week of Advent", Color.PURPLE)

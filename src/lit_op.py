@@ -1,5 +1,5 @@
-from events import event
 from colors import Color
+from events import event
 from icons import Icon
 
 HOLY_NAME = event("Most Holy Name of Jesus (II)", Color.WHITE, Icon.OP)

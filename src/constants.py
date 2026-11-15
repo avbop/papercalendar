@@ -1,4 +1,3 @@
-import math
 from PIL import ImageFont
 
 # page size

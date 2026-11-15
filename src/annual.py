@@ -1,5 +1,5 @@
-from events import event, anniversary
 from colors import Color
+from events import anniversary, event
 from icons import Icon
 
 

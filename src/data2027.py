@@ -1,6 +1,9 @@
+import annual
+import lit_no
+import lit_no_w
+import lit_op
+from events import comm, event
 from weeks import week_event
-from events import event, mem, comm
-import lit_no_w, lit_no, lit_op, annual
 
 YEAR = 2027
 

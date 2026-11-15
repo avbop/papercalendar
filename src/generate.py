@@ -1,11 +1,14 @@
 import argparse
-from datetime import timedelta, date
-from functools import partial
 import multiprocessing
 import os
-from PIL import Image, ImageDraw, ImageOps, ImageColor, ImageText
+import sys
+from datetime import date, timedelta
+from functools import partial
+
+from PIL import Image, ImageColor, ImageDraw, ImageOps, ImageText
+
 import data
-from cal import calendar, week_key, week
+from cal import calendar, week, week_key
 from colors import Color
 from constants import *
 
@@ -15,7 +18,7 @@ def setup_output(args):
     isdir = os.path.isdir(args.outdir)
     if exists and not isdir:
         print(f"Error: '{args.outdir}' exists but is not a directory.")
-        exit(1)
+        sys.exit(1)
     if not exists:
         os.makedirs(args.outdir)
         if args.debug:
@@ -67,12 +70,12 @@ def generate_week(wk, cal, args):
             txt = wk.title
             dtxt = ImageText.Text(txt, font=EVENT_FONT)
             draw.text((mid_x, y), dtxt, fill=wk.color, anchor="ma")
-            left, top, right, bottom = dtxt.get_bbox((mid_x, y), anchor="ma")
+            _left, _top, _right, bottom = dtxt.get_bbox((mid_x, y), anchor="ma")
             dy = bottom + ICON_TEXT_MARGIN
             if start.month == end.month:
-                txt = f"{start.day} – {end.day} {end.strftime("%B")}"
+                txt = f"{start.day} – {end.day} {end.strftime('%B')}"
             else:
-                txt = f"{start.day} {start.strftime("%B")} – {end.day} {end.strftime("%B")}"
+                txt = f"{start.day} {start.strftime('%B')} – {end.day} {end.strftime('%B')}"
             dtxt = ImageText.Text(txt, font=EVENT_FONT)
             draw.text((mid_x, dy), dtxt, fill=Color.DEFAULT, anchor="ma")
         else:
@@ -102,10 +105,10 @@ def draw_day(d, x_base, y_base, img, args):
     dow = ImageText.Text(d.id.strftime("%A"), font=DAY_FONT)
     draw.text((x, y), num, fill=Color.DEFAULT, anchor="la")
     draw.text((mid_x, y), dow, fill=Color.DEFAULT, anchor="ma")
-    left, top, right, bottom = num.get_bbox((x, y), anchor="la")
+    _left, _top, _right, bottom = num.get_bbox((x, y), anchor="la")
     y = bottom + TEXT_MARGIN
     for e in d.events:
-        y, right = draw_text_with_icon(e.title, e.icon, e.color, x, y, img, args)
+        y, _right = draw_text_with_icon(e.title, e.icon, e.color, x, y, img, args)
 
 
 # TODO: automatically wrap text.
@@ -119,7 +122,7 @@ def draw_text_with_icon(text, icon, color, x, y, img, args):
     x += ICON_WIDTH + ICON_TEXT_MARGIN
     t = ImageText.Text(text, font=EVENT_FONT)
     draw.text((x, y), t, fill=color, anchor="la")
-    left, top, right, bottom = t.get_bbox((x, y), anchor="la")
+    _left, _top, right, bottom = t.get_bbox((x, y), anchor="la")
     return int(max(bottom, y + ICON_HEIGHT) + ICON_TEXT_MARGIN), right
 
 

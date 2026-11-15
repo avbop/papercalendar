@@ -1,5 +1,5 @@
-from enum import Enum
 import re
+
 from colors import Color
 from icons import Icon
 

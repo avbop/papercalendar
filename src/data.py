@@ -1,8 +1,9 @@
+import sys
 from datetime import date
+
 import cal
 from events import event
 from weeks import week_event
-import sys
 lazy import data2026
 lazy import data2027
 lazy import data2028
@@ -31,7 +32,7 @@ def add_events(c: cal.calendar, year: int):
         from local_config import customize_events
 
         customize_events(es, year)
-    except:
+    except ImportError:
         print("Warning: unable to load local_config.py.", file=sys.stderr)
     for e in es:
         c.add_event(e[0], e[1])

@@ -1,10 +1,9 @@
-from constants import *
-from collections import defaultdict
-from datetime import timedelta, date
+from datetime import date, timedelta
+
 from colors import Color
-from icons import Icon
-from util import *
+from constants import *
 from events import event
+from util import *
 from weeks import week_event
 
 
@@ -38,8 +37,8 @@ class day:
 
 class calendar:
     def __init__(self):
-        self._weeks: dict[date, week] = dict()
-        self._days: dict[date, day] = dict()
+        self._weeks: dict[date, week] = {}
+        self._days: dict[date, day] = {}
 
     def add_event(self, d: date, e: event | week_event):
         if isinstance(e, event):
