@@ -1,0 +1,21 @@
+name: checks
+run-name: ${{ github.actor }} is running checks.
+on: [push, pull_request]
+jobs:
+  uv-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+      - uses: astral-sh/setup-uv@main
+      - run: cp src/local_config.py.template src/local_config.py
+      - run: uv check
+  ruff-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+      - uses: astral-sh/setup-uv@main
+      - run: cp src/local_config.py.template src/local_config.py
+      - run: uv add --dev ruff
+      - run: uv run ruff check
