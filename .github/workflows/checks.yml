@@ -30,6 +30,7 @@ jobs:
       - run: mkdir assets
       - run: cp Charis-7.000/Charis-Bold.ttf assets/bold.ttf
       - run: cp Charis-7.000/Charis-Regular.ttf assets/regular.ttf
+      - run: rm -rf Charis* charis*
       - run: cp src/local_config.py.template src/local_config.py
       - run: uv add --dev pytest
       - run: uv run pytest
