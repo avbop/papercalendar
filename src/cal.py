@@ -1,7 +1,6 @@
 from datetime import date, timedelta
 
 from colors import Color
-from constants import *
 from events import event
 from util import *
 from weeks import week_event
