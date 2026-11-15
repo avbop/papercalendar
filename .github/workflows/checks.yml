@@ -19,3 +19,17 @@ jobs:
       - run: cp src/local_config.py.template src/local_config.py
       - run: uv add --dev ruff
       - run: uv run ruff check
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+      - uses: astral-sh/setup-uv@main
+      - run: wget -O charis.zip https://software.sil.org/downloads/r/charis/Charis-7.000.zip
+      - run: unzip charis.zip
+      - run: mkdir assets
+      - run: cp Charis-7.000/Charis-Bold.ttf assets/bold.ttf
+      - run: cp Charis-7.000/Charis-Regular.ttf assets/regular.ttf
+      - run: cp src/local_config.py.template src/local_config.py
+      - run: uv add --dev pytest
+      - run: uv run pytest
