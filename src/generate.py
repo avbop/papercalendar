@@ -72,21 +72,8 @@ def generate_week(wk, cal, args):
     y = args.y_origin_bottom
     for i in range(7, 3, -1):
         x -= args.dx
-        if i == 7:  # TODO: refactor into separate function.
-            mid_x = x + args.dx // 2
-            start = wk.id
-            end = wk.id + timedelta(days=6)
-            txt = wk.title
-            dtxt = ImageText.Text(txt, font=args.event_font)
-            draw.text((mid_x, y), dtxt, fill=wk.color, anchor="ma")
-            _left, _top, _right, bottom = dtxt.get_bbox((mid_x, y), anchor="ma")
-            dy = bottom + args.icon_text_margin
-            if start.month == end.month:
-                txt = f"{start.day} – {end.day} {end.strftime('%B')}"
-            else:
-                txt = f"{start.day} {start.strftime('%B')} – {end.day} {end.strftime('%B')}"
-            dtxt = ImageText.Text(txt, font=args.event_font)
-            draw.text((mid_x, dy), dtxt, fill=Color.DEFAULT, anchor="ma")
+        if i == 7:
+            draw_week_info(wk, x, y, out, args)
         else:
             day = cal.get_day(wk.id + timedelta(days=i))
             draw_day(day, x, y, out, args)
@@ -105,6 +92,25 @@ def generate_week(wk, cal, args):
             print(f"{pid}: Wrote '{filename}'.")
 
 
+def draw_week_info(wk: week, x: int, y: int, img, args) -> None:
+    mid_x = x + args.dx // 2
+    start = wk.id
+    end = wk.id + timedelta(days=6)
+    txt = wk.title
+    txt = wrap_text(txt, "ma", args.event_font, args)
+    dtxt = ImageText.Text(txt, font=args.event_font)
+    draw = ImageDraw.Draw(img)
+    draw.text((mid_x, y), dtxt, fill=wk.color, anchor="ma")
+    _left, _top, _right, bottom = dtxt.get_bbox((mid_x, y), anchor="ma")
+    dy = bottom + args.icon_text_margin
+    if start.month == end.month:
+        txt = f"{start.day} – {end.day} {end.strftime('%B')}"
+    else:
+        txt = f"{start.day} {start.strftime('%B')} – {end.day} {end.strftime('%B')}"
+    dtxt = ImageText.Text(txt, font=args.event_font)
+    draw.text((mid_x, dy), dtxt, fill=Color.DEFAULT, anchor="ma")
+
+
 def draw_day(d, x_base, y_base, img, args):
     draw = ImageDraw.Draw(img)
     mid_x = x_base + args.dx // 2
@@ -120,19 +126,65 @@ def draw_day(d, x_base, y_base, img, args):
         y, _right = draw_text_with_icon(e.title, e.icon, e.color, x, y, img, args)
 
 
-# TODO: automatically wrap text.
-def draw_text_with_icon(text, icon, color, x, y, img, args):
+def draw_text_with_icon(
+    text: str, icon_src: str, color: str, x: int, y: int, img, args
+) -> tuple[int, int]:
     draw = ImageDraw.Draw(img)
-    icon = Image.open(os.path.join(args.assets, icon))
+    icon = Image.open(os.path.join(args.assets, icon_src))
     icon = ImageOps.pad(icon, (args.icon_width, args.icon_height))
     if args.color_icons:
         icon = color_image(icon, color)
     img.paste(icon, (x, y))
     x += args.icon_width + args.icon_text_margin
+    text = wrap_text(text, "la", args.event_font, args)
     t = ImageText.Text(text, font=args.event_font)
     draw.text((x, y), t, fill=color, anchor="la")
     _left, _top, right, bottom = t.get_bbox((x, y), anchor="la")
-    return int(max(bottom, y + args.icon_height) + args.icon_text_margin), right
+    return int(max(bottom, y + args.icon_height) + args.icon_text_margin), int(right)
+
+
+def wrap_text(text: str, anchor: str, font: ImageFont.ImageFont, args) -> str:
+    """Go through text line-by-line and try to get each line to fit within the width of a day box (as defined by the dimensions in args). Replaces '%' with '\n' starting from the beginning of text. Unused '%' are replaced with ' '.
+    >>> args = parse_args()
+    >>> wrap_text("hello%world", "la", args.event_font, args)
+    'hello world'
+    >>> wrap_text("hello world%hello world%hello world%hello world", "la", args.event_font, args)
+    'hello world\\nhello world hello world hello world'
+    >>> wrap_text("hello world hello world%hello world hello world", "la", args.event_font, args)
+    'hello world hello world\\nhello world hello world'
+    >>> wrap_text("first line\\nhello world hello world%hello world hello world", "la", args.event_font, args)
+    'first line\\nhello world hello world\\nhello world hello world'
+    >>> # Test off-by-one error when line can't be wrapped.
+    >>> wrap_text("hello world hello world hello world hello world", "la", args.event_font, args)
+    'hello world hello world hello world hello world'
+    """
+    lines = text.splitlines()
+    w = args.dx - args.icon_width - 2 * args.icon_text_margin
+    for i in range(len(lines)):
+        l = lines[i]
+        t = ImageText.Text(l, font=font)
+        _left, _top, right, _bottom = t.get_bbox((0, 0), anchor=anchor)
+        found = True
+        while right > w and found:
+            c0 = l.count("%")
+            l = l.replace("%", "\n", 1)
+            c1 = l.count("%")
+            if c0 == c1:
+                found = False
+            else:
+                found = True
+            # for j in range(len(l)):
+            #     if l[j] == "%":
+            #         found = True
+            #         modline = l[0:j] + "\n" + modline
+            #         break
+            #     else:
+            #         modline += l[j]
+            # l = modline
+            t = ImageText.Text(l, font=font)
+            _left, _top, right, _bottom = t.get_bbox((0, 0), anchor=anchor)
+        lines[i] = l
+    return "\n".join(lines).replace("%", " ")
 
 
 def color_image(img, color):
@@ -229,7 +281,7 @@ def parse_args() -> argparse.Namespace:
     args.event_font = ImageFont.truetype(os.path.join(args.assets, "regular.ttf"), 40)
     args.icon_width = 50
     args.icon_height = args.icon_width
-    args.icon_text_margin = args.icon_width // 3
+    args.icon_text_margin = args.icon_height // 3
     args.border_width = 5
     args.text_margin = 40
     return args

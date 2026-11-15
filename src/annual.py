@@ -6,10 +6,12 @@ from icons import Icon
 def pope_election(start: int, current: int) -> event:
     """
     >>> pope_election(2025, 2026).title
-    '1st anniversary of the election of the Supreme Pontiff'
+    '1st anniversary of the election%of the Supreme Pontiff'
+    >>> pope_election(2025, 2027).title
+    '2nd anniversary of the election%of the Supreme Pontiff'
     """
     a = anniversary(
-        "{} anniversary of the election of the Supreme Pontiff",
+        "{} anniversary of the election%of the Supreme Pontiff",
         Color.GENERIC,
         Icon.GENERIC,
         start,
@@ -18,16 +20,18 @@ def pope_election(start: int, current: int) -> event:
     if a is not None:
         return a
     else:
-        return event("Election of the Supreme Pontiff", Color.GENERIC, Icon.GENERIC)
+        return event("Election of the%Supreme Pontiff", Color.GENERIC, Icon.GENERIC)
 
 
 def pope_inauguration(start: int, current: int) -> event:
     """
     >>> pope_inauguration(2025, 2026).title
-    '1st anniversary of the inauguration of the ministry of the Supreme Pontiff'
+    '1st anniversary of the inauguration%of the ministry of the Supreme Pontiff'
+    >>> pope_inauguration(2025, 2027).title
+    '2nd anniversary of the inauguration%of the ministry of the Supreme Pontiff'
     """
     a = anniversary(
-        "{} anniversary of the inauguration of the ministry of the Supreme Pontiff",
+        "{} anniversary of the inauguration%of the ministry of the Supreme Pontiff",
         Color.GENERIC,
         Icon.GENERIC,
         start,
@@ -37,7 +41,7 @@ def pope_inauguration(start: int, current: int) -> event:
         return a
     else:
         return event(
-            "Inauguration of the ministry of the Supreme Pontiff",
+            "Inauguration of the ministry%of the Supreme Pontiff",
             Color.GENERIC,
             Icon.GENERIC,
         )
