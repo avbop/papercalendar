@@ -1,3 +1,12 @@
+# Running the script
+See:
+
+    python src/generate.py --help
+
+or:
+
+    uv run calendar --help
+
 # Assets
 The script relies on the following files in the directory set by `-a`/`--assets` (which is `assets` by default).
 
