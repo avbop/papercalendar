@@ -8,4 +8,5 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
       - uses: astral-sh/setup-uv@main
+      - run: cp src/local_config.py.template src/local_config.py
       - run: uv check
